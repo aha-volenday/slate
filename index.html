@@ -198,7 +198,7 @@
     </style>
     <link href="stylesheets/screen-a1ce949a.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all-c5541673.js"></script>
+      <script src="javascripts/all_nosearch-c275c2f6.js"></script>
   </head>
 
   <body class="index" data-languages="[&quot;javascript&quot;]">
@@ -213,10 +213,6 @@
         <div class="lang-selector">
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
@@ -240,6 +236,23 @@
                   </li>
                   <li>
                     <a href="#login-with-facebook" class="toc-h2 toc-link" data-title="Login with Facebook">Login with Facebook</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#database" class="toc-h1 toc-link" data-title="Database">Database</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-fetch" class="toc-h2 toc-link" data-title="GET / FETCH">GET / FETCH</a>
+                  </li>
+                  <li>
+                    <a href="#create" class="toc-h2 toc-link" data-title="CREATE">CREATE</a>
+                  </li>
+                  <li>
+                    <a href="#update-patch" class="toc-h2 toc-link" data-title="UPDATE / PATCH">UPDATE / PATCH</a>
+                  </li>
+                  <li>
+                    <a href="#delete" class="toc-h2 toc-link" data-title="DELETE">DELETE</a>
                   </li>
               </ul>
           </li>
@@ -508,6 +521,470 @@ Make sure to replace all necessary parameters.
 <td>false</td>
 <td>{&#39;Content-Type&#39;:&#39;application/json&#39;}</td>
 <td>Pass your custom headers</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
+</aside>
+<h1 id='database'>Database</h1><h2 id='get-fetch'>GET / FETCH</h2>
+<p>To get the list of recrods or specific record by id, you have to use the get function under database object. You can narrow your query by using the chain methods.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">database</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">all</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">fields</span><span class="p">([</span><span class="s2">"FirstName"</span><span class="p">,</span> <span class="s2">"LastName"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">({</span> <span class="na">Age</span><span class="p">:</span> <span class="p">{</span> <span class="na">$gte</span><span class="p">:</span> <span class="mi">18</span> <span class="p">}</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">ids</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">keywords</span><span class="p">(</span><span class="s2">"John Doe"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">page</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">size</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">sort</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">database</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">all</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">fields</span><span class="p">([</span><span class="s2">"FirstName"</span><span class="p">,</span> <span class="s2">"LastName"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">({</span> <span class="na">Age</span><span class="p">:</span> <span class="p">{</span> <span class="na">$gte</span><span class="p">:</span> <span class="mi">18</span> <span class="p">}</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">ids</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">keywords</span><span class="p">(</span><span class="s2">"John Doe"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">page</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">size</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">sort</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-5'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>entity</td>
+<td>true</td>
+<td>-</td>
+<td>Entity/Table/Collection ID</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Access or ID token from authentication</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+</tbody></table>
+<h3 id='methods'>Methods</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exec</td>
+<td>true</td>
+<td></td>
+<td>To execute the whole chain</td>
+</tr>
+<tr>
+<td>all</td>
+<td>false</td>
+<td>false</td>
+<td>To get all records and disregard the pagination</td>
+</tr>
+<tr>
+<td>autoPopulate</td>
+<td>false</td>
+<td>true</td>
+<td>This will auto populate all reference connected entity</td>
+</tr>
+<tr>
+<td>count</td>
+<td>false</td>
+<td>false</td>
+<td>To get records count</td>
+</tr>
+<tr>
+<td>fields</td>
+<td>false</td>
+<td>[all fields]</td>
+<td>To specify which fields you want return</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>false</td>
+<td>{}</td>
+<td>This method is using all mongodb querying methods like $eq, $gt/$gte, $lt/\$lte</td>
+</tr>
+<tr>
+<td>ids</td>
+<td>false</td>
+<td>[]</td>
+<td>To filter specific list of records IDs</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>false</td>
+<td>&#39;&#39;</td>
+<td>If you need to filter all string fields by string of text</td>
+</tr>
+<tr>
+<td>page</td>
+<td>false</td>
+<td>1</td>
+<td>Will be use for pagination</td>
+</tr>
+<tr>
+<td>populate</td>
+<td>false</td>
+<td>[]</td>
+<td>Incase autoPopulate is off and you want to populate specific fields only</td>
+</tr>
+<tr>
+<td>setId</td>
+<td>false</td>
+<td>-</td>
+<td>This is to get 1 record</td>
+</tr>
+<tr>
+<td>size</td>
+<td>false</td>
+<td>50</td>
+<td>Number of records to return</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>false</td>
+<td>{Id: -1}</td>
+<td>Sort the return records, 1 for ASC and -1 for DESC</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
+</aside>
+<h2 id='create'>CREATE</h2>
+<p>Create or add new record to your entity, this accepts a javascript object. Incase you have file fields in you entity, SDK will automatically do form-data transfer.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">database</span>
+  <span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">data</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="s2">"John"</span><span class="p">,</span> <span class="na">LastName</span><span class="p">:</span> <span class="s2">"Doe"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">database</span>
+  <span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">data</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="s2">"John"</span><span class="p">,</span> <span class="na">LastName</span><span class="p">:</span> <span class="s2">"Doe"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-6'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>entity</td>
+<td>true</td>
+<td>-</td>
+<td>Entity/Table/Collection ID</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Access or ID token from authentication</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+</tbody></table>
+<h3 id='methods-2'>Methods</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exec</td>
+<td>true</td>
+<td></td>
+<td>To execute the whole chain</td>
+</tr>
+<tr>
+<td>autoPopulate</td>
+<td>false</td>
+<td>true</td>
+<td>This will auto populate all reference connected entity</td>
+</tr>
+<tr>
+<td>data</td>
+<td>true</td>
+<td>{}</td>
+<td>Javascript object containing the form data</td>
+</tr>
+<tr>
+<td>populate</td>
+<td>false</td>
+<td>[]</td>
+<td>Incase autoPopulate is off and you want to populate specific fields only</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
+</aside>
+<h2 id='update-patch'>UPDATE / PATCH</h2>
+<p>Update a record to your entity, this accepts a javascript object. Pass only the fields you want to update</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">database</span>
+  <span class="p">.</span><span class="nx">update</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">id</span><span class="p">:</span> <span class="s2">"RECORD_ID"</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">data</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="s2">"John"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">database</span>
+  <span class="p">.</span><span class="nx">update</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">id</span><span class="p">:</span> <span class="s2">"RECORD_ID"</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">autoPopulate</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">data</span><span class="p">({</span> <span class="na">FirstName</span><span class="p">:</span> <span class="s2">"John"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">populate</span><span class="p">([</span><span class="s2">"UserTypes"</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-7'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>entity</td>
+<td>true</td>
+<td>-</td>
+<td>Entity/Table/Collection ID</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Access or ID token from authentication</td>
+</tr>
+<tr>
+<td>id</td>
+<td>true</td>
+<td>-</td>
+<td>Record ID to update</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+</tbody></table>
+<h3 id='methods-3'>Methods</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exec</td>
+<td>true</td>
+<td></td>
+<td>To execute the whole chain</td>
+</tr>
+<tr>
+<td>autoPopulate</td>
+<td>false</td>
+<td>true</td>
+<td>This will auto populate all reference connected entity</td>
+</tr>
+<tr>
+<td>data</td>
+<td>true</td>
+<td>{}</td>
+<td>Javascript object containing the form data</td>
+</tr>
+<tr>
+<td>populate</td>
+<td>false</td>
+<td>[]</td>
+<td>Incase autoPopulate is off and you want to populate specific fields only</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
+</aside>
+<h2 id='delete'>DELETE</h2>
+<p>Delete a record to your entity.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">database</span>
+  <span class="p">.</span><span class="k">delete</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">id</span><span class="p">:</span> <span class="s2">"RECORD_ID"</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">database</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">database</span>
+  <span class="p">.</span><span class="k">delete</span><span class="p">({</span>
+    <span class="na">entity</span><span class="p">:</span> <span class="s2">"ENTITY_ID"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">id</span><span class="p">:</span> <span class="s2">"RECORD_ID"</span><span class="p">,</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">exec</span><span class="p">();</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-8'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>entity</td>
+<td>true</td>
+<td>-</td>
+<td>Entity/Table/Collection ID</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Access or ID token from authentication</td>
+</tr>
+<tr>
+<td>id</td>
+<td>true</td>
+<td>-</td>
+<td>Record ID to update</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>true</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+</tbody></table>
+<h3 id='methods-4'>Methods</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exec</td>
+<td>true</td>
+<td></td>
+<td>To execute the whole chain</td>
 </tr>
 </tbody></table>
 
