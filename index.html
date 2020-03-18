@@ -229,6 +229,20 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#login-with-email-address" class="toc-h2 toc-link" data-title="Login with Email Address">Login with Email Address</a>
+                  </li>
+                  <li>
+                    <a href="#login-with-google" class="toc-h2 toc-link" data-title="Login with Google">Login with Google</a>
+                  </li>
+                  <li>
+                    <a href="#login-with-facebook" class="toc-h2 toc-link" data-title="Login with Facebook">Login with Facebook</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='https://cloud.aha.volenday.com/'>Sign Up for a API Key</a></li>
@@ -255,12 +269,15 @@ yarn add @volenday/sdk
 <blockquote>
 <p>Initialize your app by passing the api key</p>
 </blockquote>
-<pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">ENVIRONMENTS</span><span class="p">,</span> <span class="nx">initialize</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">ENVIRONMENTS</span><span class="p">,</span> <span class="nx">initialize</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ENVIRONMENTS</span><span class="p">,</span> <span class="nx">initialize</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
 
 <span class="nx">initialize</span><span class="p">({</span> <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span> <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span> <span class="p">});</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>API_KEY</code> with your API key.</p>
+<p>Make sure to replace all necessary parameters.</p>
 </blockquote>
 
 <p>Start by initializing your application.</p>
@@ -290,7 +307,212 @@ yarn add @volenday/sdk
 <p>Please take note that you only need initialize you app once in your root file.</p>
 
 <aside class="notice">
-Make sure to replace <code>API_KEY</code> with your API key.
+Make sure to replace all necessary parameters.
+</aside>
+<h1 id='authentication'>Authentication</h1><h2 id='login-with-email-address'>Login with Email Address</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">auth</span>
+  <span class="p">.</span><span class="nx">loginWithEmail</span><span class="p">({</span>
+    <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+    <span class="na">emailAddress</span><span class="p">:</span> <span class="s2">"USER_EMAIL"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="na">password</span><span class="p">:</span> <span class="s2">"USER_PASSWORD"</span><span class="p">,</span>
+    <span class="na">rememberMe</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">loginWithEmail</span><span class="p">({</span>
+  <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+  <span class="na">emailAddress</span><span class="p">:</span> <span class="s2">"USER_EMAIL"</span><span class="p">,</span>
+  <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="na">password</span><span class="p">:</span> <span class="s2">"USER_PASSWORD"</span><span class="p">,</span>
+  <span class="na">rememberMe</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>true</td>
+<td>Autoset from initialize function</td>
+<td>Can be get/created in you AHA cloud account</td>
+</tr>
+<tr>
+<td>emailAddress</td>
+<td>true</td>
+<td>-</td>
+<td>Email Address</td>
+</tr>
+<tr>
+<td>password</td>
+<td>true</td>
+<td>-</td>
+<td>Password</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>false</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>false</td>
+<td>{&#39;Content-Type&#39;:&#39;application/json&#39;}</td>
+<td>Pass your custom headers</td>
+</tr>
+<tr>
+<td>rememberMe</td>
+<td>false</td>
+<td>false</td>
+<td>To disregard the session timeout</td>
+</tr>
+</tbody></table>
+<h2 id='login-with-google'>Login with Google</h2>
+<p>You have to handle the google popup login or oauth. On login success, google will provide an access token or id token. You have to pass that token to AHA SDK.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">auth</span>
+  <span class="p">.</span><span class="nx">loginWithGoogle</span><span class="p">({</span>
+    <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">loginWithGoogle</span><span class="p">({</span>
+  <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+  <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-3'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>true</td>
+<td>Autoset from initialize function</td>
+<td>Can be get/created in you AHA cloud account</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>-</td>
+<td>Access or ID token from google login</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>false</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>false</td>
+<td>{&#39;Content-Type&#39;:&#39;application/json&#39;}</td>
+<td>Pass your custom headers</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
+</aside>
+<h2 id='login-with-facebook'>Login with Facebook</h2>
+<p>You have to handle the facebook popup login or oauth. On login success, facebook will provide an access token or id token. You have to pass that token to AHA SDK.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"@volenday/sdk"</span><span class="p">);</span>
+
+<span class="nx">auth</span>
+  <span class="p">.</span><span class="nx">loginWithFacebook</span><span class="p">({</span>
+    <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+    <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{});</span>
+
+<span class="c1">//ES2015 / ES6</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">auth</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"@volenday/sdk"</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">loginWithFacebook</span><span class="p">({</span>
+  <span class="na">apiKey</span><span class="p">:</span> <span class="s2">"API_KEY"</span><span class="p">,</span>
+  <span class="na">environment</span><span class="p">:</span> <span class="nx">ENVIRONMENTS</span><span class="p">.</span><span class="nx">SANDBOX</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="na">token</span><span class="p">:</span> <span class="s2">"ACCESS_TOKEN"</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace all necessary parameters.</p>
+</blockquote>
+<h3 id='parameters-4'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>true</td>
+<td>Autoset from initialize function</td>
+<td>Can be get/created in you AHA cloud account</td>
+</tr>
+<tr>
+<td>token</td>
+<td>true</td>
+<td>-</td>
+<td>Access or ID token from facebook login</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>false</td>
+<td>Autoset from initialize function (production)</td>
+<td>Either sandbox or production</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>false</td>
+<td>{&#39;Content-Type&#39;:&#39;application/json&#39;}</td>
+<td>Pass your custom headers</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Make sure to replace all necessary parameters.
 </aside>
 
       </div>
