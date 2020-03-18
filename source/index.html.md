@@ -5,7 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
 
 toc_footers:
-  - <a href='https://cloud.aha.volenday.com/'>Sign Up for a API Key</a>
+  - <a href='https://cloud.aha.volenday.com/auth/sign-up'>Sign Up for a API Key</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 #includes:
